@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\BookOutOnLoan;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +14,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call([
+            UserSeeder::class,
+            AuthorSeeder::class,
+            BookSeeder::class,
+            CategorySeeder::class,
+            BelongsToSeeder::class,
+            WrittenBySeeder::class,
+            BookOutOnLoanSeeder::class
+        ]);
     }
 }

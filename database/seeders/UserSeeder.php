@@ -4,6 +4,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -21,7 +22,7 @@ class UserSeeder extends Seeder
             $user->user_email = $faker->email();
             $user->user_phone_num = $faker->phoneNumber();
             $user->user_address = $faker->address();
-            $user->user_password = $faker->password(6);
+            $user->user_password = Hash::make($faker->password(6));
             $user->save();
             unset($user);
         }

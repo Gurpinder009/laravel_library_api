@@ -16,14 +16,13 @@ class CreateBookOutOnLoansTable extends Migration
         Schema::create('book_out_on_loans', function (Blueprint $table) {
             $table->id();
             $table->date("issue_date")->nullable(false);
-            $table->unsignedBigInteger("user_id");
-            $table->unsignedBigInteger("book_id");
+            $table->unsignedBigInteger("user_id")->nullable(false);
+            $table->unsignedBigInteger("book_id")->nullable(false);
             $table->foreign('user_id')->references('user_id')->on('users');
             $table->foreign('book_id')->references('book_id')->on('books');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *

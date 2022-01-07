@@ -7,79 +7,47 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        return response()->json("book controller");
+        return response()->json(Book::all());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
-    {
-        //
+    {   
+        $request->validate([
+            "book_title" => "required|min:3",
+            "book_date_of_publication"=>"required|date_format:y-m-d"
+        ]);
+
+        $data = new Book();
+        $data->book_title = $request->book_title;
+        $data->book_date_of_publication = $request->book_date_of_publication;
+        $data->save();
+        return response()->json($data);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Book  $book
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Book $book)
+    public function show(int $id)
     {
-        //
+        $data = Book::find($id);
+        return response()->json($data);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Book  $book
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Book $book)
-    {
-        //
+    public function update(Request $request,int $id)
+    {   
+        $request->validate([
+            "book_title" => "min:3",
+            "book_date_of_publication"=>"date_format:y-m-d"
+        ]);
+
+        $data = Book::find($id);
+        $data->book_title = $request->book_title;
+        $data->book_date_of_publication = $request->book_date_of_publication;
+        $data->save();
+        return response()->json($data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Book  $book
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Book $book)
+    public function destroy(int $id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Book  $book
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Book $book)
-    {
-        //
+        return response()->json(Book::destory($id));
     }
 }
